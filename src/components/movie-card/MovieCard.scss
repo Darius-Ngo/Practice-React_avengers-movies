@@ -1,0 +1,134 @@
+@use '../../scss/' as *;
+
+.movie__card {
+    position: relative;
+    border-radius: $border-radius;
+    transition: box-shadow 0.4s ease;
+
+    &__img {
+        position: relative;
+        overflow: hidden;
+        border-radius: $border-radius;
+
+        img {
+            object-fit: cover;
+            transform: scale(1);
+            transition: all 0.4s ease;
+        }
+    }
+
+    .btn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+
+    &__rated {
+        @include overlay();
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 0.3rem 0.7rem;
+        color: yellow;
+        border-radius: $border-radius;
+
+        i {
+            padding-right: 4px;
+        }
+    }
+
+    &__info {
+        position: absolute;
+        top: 10%;
+        left: 90%;
+
+        width: 200px;
+        padding: 0.5rem 1rem 1rem;
+
+        border-radius: 12px;
+        box-shadow: 4px 0 12px 8px rgba($color: #000000, $alpha: 0.4);
+
+        background-color: $white;
+        color: $body-bg;
+
+        pointer-events: none;        
+        z-index: 100;
+        opacity: 0;
+        transform: scale(0);
+        transform-origin: left 60%; 
+        will-change: transform, opacity;
+        transition: all 0.4s ease;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            border-width: 12px 10px;
+            border-style: solid;
+            border-color: transparent #fff transparent transparent;
+        }
+
+        .title {
+            font-size: 1.2rem;
+        }
+
+        .release_date {
+            font-size: .9rem;
+            font-weight: 600;
+            padding: 4px 0;
+            
+            i {
+                color: greenyellow;
+                padding-right: 4px;
+                font-size: 1rem;
+            }
+        }
+
+        .genres {
+            font-size: 1rem;
+            font-weight: 600;
+
+            &__list {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            &__item {
+                font-size: .8rem;
+                padding: 2px 8px;
+                margin-right: 4px;
+                margin-top: 6px;
+                border-radius: $border-radius;
+                border: 1px solid #ddd;
+            }
+        }
+    }
+
+    &:hover {
+        box-shadow: 0 0 12px 8px rgba(0, 0, 0, 0.4);
+        
+        .movie__card__img {
+            img {
+                transform: scale(1.2);
+                transition: all 0.4s ease;
+            }
+        }
+
+        .btn {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .movie__card__info {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.4s ease;
+            z-index: 1000;
+        }
+    }
+
+}

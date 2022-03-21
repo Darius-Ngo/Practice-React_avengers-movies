@@ -1,0 +1,127 @@
+@use '../../scss/' as *;
+
+.footer {
+    background-color: $footer-bg;
+    padding-left: calc($nav-close-width + 2rem);
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+
+    @include mobile {
+        padding: 2rem;
+        padding-bottom: 4rem;
+    }
+
+    .footer__header {
+        @include flex(center,space-between);
+
+        padding: 1.5rem 0;
+        border-bottom: 1px solid $txt-footer-color;
+
+        @include mobile {
+            @include flex(center,center);
+        }
+
+        &__title {
+            font-size: 2.4rem;
+            font-weight: bold;
+
+            @include mobile {
+                display: none;
+            }
+        }
+
+        &__contact {
+            @include flex(center, unset);
+
+            &__item {
+                @include flex(center, center);
+                margin-left: 1.5rem;
+
+                font-size: 0.9rem;
+
+                i {
+                    padding: 0 4px;
+                    font-size: 1.2rem;
+                    transform: translateY(4px);
+
+                    @include mobile {
+                        font-size: 2rem;
+                    }
+                }
+
+                span {
+                    @include mobile {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer__content {
+        @include flex(center, flex-start);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-rows: auto;
+        grid-gap: 40px;
+
+        &__menu {
+            margin-right: 1rem;
+
+            &__title {
+                font-size: 1.2rem;
+                font-weight: bold;
+                padding-block: 1rem;
+            }
+
+            &__list {
+                @include flex(center,space-between);
+
+                &__link {
+                    display: flex;
+                    flex-direction: column;
+                    width: 60%;
+                    padding-right: 20px; 
+                    
+                    color: $txt-footer-color;
+                    font-size: 0.9rem;
+
+                    a {
+                        margin: 4px 0;
+
+                        &:hover {
+                            color: $hover-color;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__menu:last-child {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: -1rem;
+                top: 1.5rem;
+
+                background-color: $txt-footer-color;
+                width: 1px;
+                height: 90%;
+
+                @include mobile {
+                    background-color: unset;
+                }
+            }
+
+            &__list {
+                &__link {
+                    width: 100%;
+                }
+            }
+
+        }
+
+    }
+}

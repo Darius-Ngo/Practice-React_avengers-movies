@@ -1,0 +1,217 @@
+@use '../../scss/' as *;
+
+.slider {
+    margin-bottom: 3rem;
+}
+.slider__item {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 9rem 0 7rem;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+        @include overlay();
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100px;
+        background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
+    }
+
+    &__content {
+        @include flex(center, space-between);
+        padding-left: 7rem;
+        position: relative;
+
+        @include mobile {
+            padding: 0 2rem;
+        }
+
+
+        &__info {
+            width: 60%;
+
+            @include mobile {
+                width: 100%;
+            }
+            & .title {
+                font-size: 3.5rem;
+            }
+
+            & .release_date {
+                @include flex(center, unset);
+                padding: 0.5rem 0;
+                font-size: 1.6rem;
+
+                & .date {
+                    padding: 4px 8px
+                }
+            }
+
+            & .overview {
+                font-size: 1.6rem;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
+            & .btns {
+                margin: 3rem 0 2rem;
+                display: none;
+
+                & > * {
+                    margin-right: 10px;
+                }
+
+                @include mobile {
+                    @include flex(center, unset);
+                    opacity: 0;
+                    transform: translateY(100px);
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+                }
+            }
+
+            .title, .release_date, .overview {
+                opacity: 0;
+                transform: translateY(-100px);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+
+            &__trailer {
+                height: 13rem;
+                width: 100%;
+                margin-top: 3rem;
+
+                @include mobile {
+                    display: none;
+                }
+
+                & .trailer__videoList {
+                    @include flex(center,unset);
+                    margin-top: 1.5rem;
+
+                    & .video {
+                        margin-right: 1rem;
+                        border-radius: 20px;
+                        overflow: hidden;
+                        position: relative;
+
+                        iframe {
+                            height: 200px;
+
+                            @include tablet {
+                                width: 200px;
+                                height: 140px;
+                            }
+                        }
+
+                        &__play {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            height: 70px;
+                            width: 100%;
+                            cursor: pointer;
+                        }
+                    }
+
+                    @include tablet {
+                        overflow: auto;
+                    }
+                }
+
+                .trailer__title, .trailer__videoList {
+                    opacity: 0;
+                    transform: translateX(-100px);
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+                }
+            }
+        }
+
+        &__poster {
+            @include flex(center,center);
+            opacity: 0;
+            transform: translateX(100px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+
+            &__img {
+                width: 60%;
+                position: relative;
+
+                @include tablet {
+                    width: 80%;
+                }
+                
+                img {
+                    border-radius: $border-radius;
+                }
+
+                .play__btn {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%)
+                }
+            }
+
+            @include mobile {
+                display: none;
+            }
+        }
+
+    }
+
+    &.active &__content {
+        &__info {
+            .title, .release_date, .overview, .btns {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .release_date {
+                transition-delay: 0.2s;
+            }
+            .overview {
+                transition-delay: 0.4s;
+            }
+            .btns {
+                transition-delay: 0.6s;
+            }
+    
+            &__trailer {
+                .trailer__title, .trailer__videoList {
+                    opacity: 1;
+                    transform: translateX(0);
+                    transition-delay: 0.7s
+                }
+                .trailer__videoList {
+                    transition-delay: 0.8s
+                }
+            }
+        }
+
+        &__poster {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.8s;
+        }
+    }
+}

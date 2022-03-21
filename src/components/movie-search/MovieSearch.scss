@@ -1,0 +1,28 @@
+@use '../../scss/' as *;
+
+.movies-search {
+    margin-top: 8rem;
+
+    .movies__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-rows: auto;
+        grid-gap: 20px 20px;
+    }
+
+    .not_found {
+        @include flex(center,center);
+
+        img {
+            width: 60%;
+
+            @include tablet {
+                width: 80%;
+            }
+
+            @include mobile {
+                width: 90%;
+            }
+        }
+    }
+}
