@@ -4,9 +4,10 @@ import './App.scss';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import Loading from './components/loading/Loading';
 import SideBar from './components/sidebar/SideBar';
-// import Footer from './components/footer/Footer';
 import RouterConfig from './config/RouterConfig';
+// import Footer from './components/footer/Footer';
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import tmdbApi, { category } from '../../api/tmdbApi';
@@ -127,4 +127,4 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+export default memo(Footer);

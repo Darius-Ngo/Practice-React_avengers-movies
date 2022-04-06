@@ -11,12 +11,14 @@ import apiConfig from '../../api/apiConfig';
 
 import Button, { ButtonOutline } from '../button/Button';
 import Modal, { ModalContent } from '../modal/Modal';
+import Loading from '../loading/Loading';
 
 const Slider = () => {
 
     SwiperCore.use([Autoplay])
 
     const [movieItems, setMovieItems] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         const getMovies = async () => {
@@ -29,30 +31,48 @@ const Slider = () => {
             }
         }
         getMovies();
+        if (movieItems) {
+            setTimeout(() => {
+                setLoader(false);
+            }, 2000)
+        }
+    }, []);
+
+    useEffect(() => {
+        if (movieItems.length > 0) {
+            setTimeout(() => {
+                setLoader(false);
+            }, 1500)
+        }
     }, []);
 
     return (
-        <div className='slider'>
-            <Swiper
-                modules={[Autoplay]}
-                grabCursor={true}
-                spaceBetween={0}
-                slidesPerView={1}
-                autoplay={{ delay: 3000 }}
-            >
-                {movieItems && movieItems.map((item, i) => (
-                    <SwiperSlide key={i}>
-                        {({ isActive }) => (
-                            <SliderCard item={item} className={`${isActive ? 'active' : ''}`} />
-                        )}
-                    </SwiperSlide>
+        <div>
+            {loader && (
+                <Loading />
+            )}
+            <div className='slider'>
+                <Swiper
+                    modules={[Autoplay]}
+                    grabCursor={true}
+                    spaceBetween={0}
+                    slidesPerView={1}
+                    autoplay={{ delay: 3000 }}
+                >
+                    {movieItems && movieItems.map((item, i) => (
+                        <SwiperSlide key={i}>
+                            {({ isActive }) => (
+                                <SliderCard item={item} className={`${isActive ? 'active' : ''}`} />
+                            )}
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+                {movieItems.map((item, i) => (
+                    <TrailerModal key={i} item={item} ></TrailerModal>
                 ))}
-            </Swiper>
 
-            {movieItems.map((item, i) => (
-                <TrailerModal key={i} item={item} ></TrailerModal>
-            ))}
-
+            </div>
         </div>
     )
 }

@@ -14,7 +14,7 @@ const Modal = props => {
     return (
         <div
             id={props.id}
-            className={`modal ${active ? 'active' : ''}`}
+            className={`modal ${active ? 'active' : ''} ${props.className ? props.className : ''}`}
         >
             {props.children}
         </div>

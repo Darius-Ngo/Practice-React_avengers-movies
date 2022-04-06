@@ -1,0 +1,74 @@
+@use '../../scss/'as *;
+
+.your-movies {
+    width: 100%;
+    min-height: 100vh;
+
+    &__container {
+        margin-top: 3rem;
+    }
+
+    &__heading {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-rows: auto;
+        grid-gap: 20px;
+        margin-bottom: 4rem;
+
+        &__item {
+            text-align: center;
+
+            &:hover &__btn {
+                opacity: 1;
+                transform: translateY(-50px);
+            }
+
+            &__btn {
+                background-color: $white;
+                color: $hover-color;
+                opacity: 0;
+
+                &:hover {
+                    box-shadow: 0 0 3px 6px #fff;
+                }
+            }
+        }
+    }
+
+    .no_movies {
+        @include flex(center, flex-start);
+        flex-direction: column;
+        width: 100%;
+        min-height: 80vh;
+
+        &__img {
+            margin: 0 0 2rem 0;
+            height: 400px;
+            object-fit: contain;
+        }
+
+        &__btn {
+            @include flex(center, center);
+            width: 200px;
+            font-size: 1.5em;
+            font-weight: 600;
+            background-color: rgb(255, 94, 0);
+            border-radius: $border-radius;
+
+            &:hover {
+                box-shadow: 0 0 12px 4px rgb(255, 94, 0);
+            }
+
+            i {
+                font-size: 1.5em;
+                margin-left: 8px;
+            }
+        }
+    }
+}

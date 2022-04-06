@@ -1,4 +1,4 @@
-@use '../../scss/' as *;
+@use '../../scss/'as *;
 
 .movies-search {
     margin-top: 8rem;
@@ -11,7 +11,8 @@
     }
 
     .not_found {
-        @include flex(center,center);
+        @include flex(center, center);
+        margin-bottom: 4rem;
 
         img {
             width: 60%;

@@ -133,7 +133,7 @@ const Stream = (props) => {
                                 <div className="genres">
                                     <span className="title">Released: </span>
                                     {item.genres && item.genres.map((genre, i) => (
-                                        <span key={i}>{genre.name}{i < item.genres.length - 1 ? ', ' : '.'}</span>
+                                        <span key={i}>{genre.name}{i < item?.genres?.length - 1 ? ', ' : '.'}</span>
                                     ))}
                                 </div>
                                 {category === 'movie' && (

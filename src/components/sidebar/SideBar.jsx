@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import Login from '../login/Login';
 import './SideBar.scss';
 
 import logoClose from '../../assets/logo-small.png';
@@ -25,16 +26,16 @@ const SideBar = () => {
             onClick: function (e) { showMenu(e) },
             subMenu: [
                 {
+                    name: 'Top Movies',
+                    path: '/#top_movie'
+                },
+                {
                     name: 'Popular',
                     path: '/#popular_movie'
                 },
                 {
                     name: 'Upcoming',
                     path: '/#upcoming_movie'
-                },
-                {
-                    name: 'Top Rated',
-                    path: '/#top_movie'
                 }
             ]
         },
@@ -50,12 +51,12 @@ const SideBar = () => {
                     path: '/#popular_tv'
                 },
                 {
-                    name: 'On the Air',
-                    path: '/#on_the_air_tv'
+                    name: 'Top Series',
+                    path: '/#top_tv'
                 },
                 {
-                    name: 'Top Rated',
-                    path: '/#top_tv'
+                    name: 'On the Air',
+                    path: '/#on_the_air_tv'
                 }
             ]
         },
@@ -82,11 +83,10 @@ const SideBar = () => {
     const IndexActive = NavList.findIndex(e => e.path === pathname)
 
     const [keyword, setKeyword] = useState('');
+    const [login, setLogin] = useState(false);
 
     const headerRef = useRef();
-
     const sideBar = useRef();
-
     const inputRef = useRef();
 
     const showSidebar = (e) => {
@@ -100,11 +100,6 @@ const SideBar = () => {
         navActive.classList.toggle('showMenu');
     }
 
-    const showInput = () => {
-        inputRef.current.classList.toggle('active');
-        inputRef.current.focus();
-    }
-
     const closeSideBar = (e) => {
         sideBar.current.classList.add('close');
     }
@@ -113,11 +108,16 @@ const SideBar = () => {
 
     const { category } = useParams();
 
-    const gotoSearch = useCallback(() => {
+    const handleSearch = useCallback(() => {
         if (keyword.trim().length > 0) {
             navigate(`${category ? `/${category}` : ''}/search/${keyword}`);
         }
     }, [keyword, category, navigate]);
+
+    const handleLogin = () => {
+        const modalLogin = document.querySelector('.modal__login');
+        modalLogin.classList.add('active')
+    }
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -137,7 +137,7 @@ const SideBar = () => {
         const enterEvent = (e) => {
             e.preventDefault();
             if (e.keyCode === 13) {
-                gotoSearch();
+                handleSearch();
             }
         }
         document.addEventListener('keyup', enterEvent);
@@ -157,6 +157,14 @@ const SideBar = () => {
                 </div>
 
                 <ul className="sidebar__nav">
+                    <li className="sidebar__nav__item login-mobile">
+                        <div className="sidebar__nav__item__detail" onClick={handleLogin}>
+                            <div>
+                                <i class='bx bx-user'></i>
+                                <span className="sidebar__nav__item__detail__name">Login</span>
+                            </div>
+                        </div>
+                    </li>
                     {
                         NavList.map((item, i) => (
                             <li key={i} className={`sidebar__nav__item ${(i === IndexActive) ? 'active' : ''}`}>
@@ -189,23 +197,26 @@ const SideBar = () => {
                     <i onClick={(e) => showSidebar(e)} className='bx bx-menu-alt-left'></i>
                     <img src={logo} alt="" />
                 </div>
-                <input
-                    className='header__search'
-                    placeholder='Enter search ...'
-                    type='search'
-                    ref={inputRef}
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                />
-                <div className="header__options">
-                    <div className="header__options__search">
-                        <i onClick={showInput} className='bx bx-search-alt-2'></i>
+                <div className="header__search__wrap">
+                    <div className="header__search">
+                        <input
+                            className='header__search__input'
+                            placeholder='Enter search ...'
+                            type='text'
+                            ref={inputRef}
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                        />
+                        <i className='bx bx-search-alt-2 header__search__icon' onClick={handleSearch}></i>
                     </div>
+                </div>
+                <div className="header__options">
                     <div className="header__options__login">
-                        <i className='bx bxs-user'></i>
+                        <i className='bx bxs-user' onClick={handleLogin}></i>
                     </div>
                 </div>
             </div>
+            <Login />
         </>
     )
 }

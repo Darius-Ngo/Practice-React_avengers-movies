@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
+import Loading from '../loading/Loading';
 import MovieCard from '../movie-card/MovieCard';
 import tmdbApi, { category as cate, movieType, tvType } from '../../api/tmdbApi';
 import useGenres from '../hooks/useGenres';
@@ -16,6 +17,7 @@ const MovieGrid = (props) => {
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
+    const [loader, setLoader] = useState(true);
 
     const [genres, setGenres] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
@@ -36,7 +38,6 @@ const MovieGrid = (props) => {
         }
     }, [category])
 
-
     useEffect(() => {
         const getMovies = async () => {
             let res = null;
@@ -56,6 +57,11 @@ const MovieGrid = (props) => {
             setTotalPage(res.total_pages)
         }
         getMovies();
+        if (items) {
+            setTimeout(() => {
+                setLoader(false);
+            }, 1000);
+        }
         window.scrollTo(0, 0);
     }, [category, page, totalPage, selectedGenres])
 
@@ -70,6 +76,14 @@ const MovieGrid = (props) => {
         getGenres();
         setSelectedGenres([]);
     }, [category])
+
+    useEffect(() => {
+        if (items.length > 0) {
+            setTimeout(() => {
+                setLoader(false);
+            }, 1000);
+        }
+    }, [])
 
     const handlePageChange = (e) => {
         setPage((e.selected + 1));
@@ -87,6 +101,9 @@ const MovieGrid = (props) => {
 
     return (
         <div className="catalog section">
+            {loader && (
+                <Loading />
+            )}
             <div className="page-header">
                 <div className="title"><h1>{title}</h1></div>
                 <div className="genre">

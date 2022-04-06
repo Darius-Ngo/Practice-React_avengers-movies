@@ -8,67 +8,88 @@ import { ButtonOutline } from '../components/button/Button';
 import Footer from '../components/footer/Footer';
 
 const Home = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+    const style1 = {
+        position: 'relative',
+    }
+    const style2 = {
+        position: 'absolute',
+        top: '-10rem'
+    }
+
     return (
         <div className="container">
-            <Slider />
-            <div className="padding-content">
-                <div id="top_movie" className="section mb-3 list">
-                    <div className="section__header mb-1">
-                        <h1>Top Movies</h1>
-                        <Link to={`/${category.movie}`}>
-                            <ButtonOutline className='small flex'>View more </ButtonOutline>
-                        </Link>
+            <div>
+                <Slider />
+                <div className="padding-content">
+                    <div className="section mb-3 list" style={style1}>
+                        <div style={style2} id="top_movie"></div>
+                        <div className="section__header mb-1">
+                            <h1>Top Movies</h1>
+                            <Link to={`/${category.movie}`}>
+                                <ButtonOutline className='small flex'>View more </ButtonOutline>
+                            </Link>
+                        </div>
+                        <MovieList category={category.movie} type={movieType.top_rated} />
                     </div>
-                    <MovieList category={category.movie} type={movieType.top_rated} />
-                </div>
-                <div id="popular_movie" className="section mb-3 list">
-                    <div className="section__header mb-1">
-                        <h1>Popular Movies</h1>
-                        <Link to={`/${category.movie}`}>
-                            <ButtonOutline className='small flex'>View more </ButtonOutline>
-                        </Link>
+                    <div id="" className="section mb-3 list" style={style1}>
+                        <div style={style2} id="popular_movie"></div>
+                        <div className="section__header mb-1">
+                            <h1>Popular Movies</h1>
+                            <Link to={`/${category.movie}`}>
+                                <ButtonOutline className='small flex'>View more </ButtonOutline>
+                            </Link>
+                        </div>
+                        <MovieList category={category.movie} type={movieType.popular} />
                     </div>
-                    <MovieList category={category.movie} type={movieType.popular} />
-                </div>
-                <div id="upcoming_movie" className="section mb-3 list">
-                    <div className="section__header mb-1">
-                        <h1>Upcoming Movies</h1>
-                        <Link to={`/${category.movie}`}>
-                            <ButtonOutline className='small flex'>View more </ButtonOutline>
-                        </Link>
+                    <div id="" className="section mb-3 list" style={style1}>
+                        <div style={style2} id="upcoming_movie"></div>
+                        <div className="section__header mb-1">
+                            <h1>Upcoming Movies</h1>
+                            <Link to={`/${category.movie}`}>
+                                <ButtonOutline className='small flex'>View more </ButtonOutline>
+                            </Link>
+                        </div>
+                        <MovieList category={category.movie} type={movieType.upcoming} />
                     </div>
-                    <MovieList category={category.movie} type={movieType.upcoming} />
-                </div>
 
-                <div id="popular_tv" className="section mb-3 list">
-                    <div className="section__header mb-1">
-                        <h1>Popular Tv Series</h1>
-                        <Link to={`/${category.tv}`}>
-                            <ButtonOutline className='small flex'>View more </ButtonOutline>
-                        </Link>
+                    <div id="" className="section mb-3 list" style={style1}>
+                        <div style={style2} id="popular_tv"></div>
+                        <div className="section__header mb-1">
+                            <h1>Popular Tv Series</h1>
+                            <Link to={`/${category.tv}`}>
+                                <ButtonOutline className='small flex'>View more </ButtonOutline>
+                            </Link>
+                        </div>
+                        <MovieList category={category.tv} type={tvType.popular} />
                     </div>
-                    <MovieList category={category.tv} type={tvType.popular} />
-                </div>
-                <div id="top_tv" className="section mb-3 list">
-                    <div className="section__header mb-1">
-                        <h1>Top Tv Series</h1>
-                        <Link to={`/${category.tv}`}>
-                            <ButtonOutline className='small flex'>View more </ButtonOutline>
-                        </Link>
+                    <div id="" className="section mb-3 list" style={style1}>
+                        <div style={style2} id="top_tv"></div>
+                        <div className="section__header mb-1">
+                            <h1>Top Tv Series</h1>
+                            <Link to={`/${category.tv}`}>
+                                <ButtonOutline className='small flex'>View more </ButtonOutline>
+                            </Link>
+                        </div>
+                        <MovieList category={category.tv} type={tvType.top_rated} />
                     </div>
-                    <MovieList category={category.tv} type={tvType.top_rated} />
-                </div>
-                <div id="on_the_air_tv" className="section mb-3 list">
-                    <div className="section__header mb-1">
-                        <h1>On The Air TV</h1>
-                        <Link to={`/${category.tv}`}>
-                            <ButtonOutline className='small flex'>View more </ButtonOutline>
-                        </Link>
+                    <div id="" className="section mb-3 list" style={style1}>
+                        <div style={style2} id="on_the_air_tv"></div>
+                        <div className="section__header mb-1">
+                            <h1>On The Air TV</h1>
+                            <Link to={`/${category.tv}`}>
+                                <ButtonOutline className='small flex'>View more </ButtonOutline>
+                            </Link>
+                        </div>
+                        <MovieList category={category.tv} type={tvType.on_the_air} />
                     </div>
-                    <MovieList category={category.tv} type={tvType.on_the_air} />
                 </div>
+                <Footer />
             </div>
-            <Footer />
         </div>
     )
 }

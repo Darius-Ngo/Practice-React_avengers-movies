@@ -1,4 +1,4 @@
-@use '../../scss/' as *;
+@use '../../scss/'as *;
 
 .sidebar {
     position: fixed;
@@ -33,7 +33,7 @@
         }
 
         img.logo-close {
-            display:none;
+            display: none;
         }
     }
 
@@ -46,15 +46,23 @@
         &::-webkit-scrollbar {
             display: none;
         }
-        
+
         &__item {
             position: relative;
+
+            &.login-mobile {
+                display: none;
+
+                @include mobile {
+                    display: block;
+                }
+            }
 
             &.active {
                 .sidebar__nav__item__detail {
                     background-color: #333;
                     border-left: 4px solid $hover-color;
-    
+
                     * {
                         color: $hover-color;
                     }
@@ -65,41 +73,42 @@
                 @include flex(center, space-between);
                 border-left: 0px solid $hover-color;
                 transition: all 0.4s ease;
-    
+
                 &:hover {
                     background-color: #333;
                     border-left: 4px solid $hover-color;
-    
+
                     * {
                         color: $hover-color;
                     }
                 }
-    
+
                 a {
                     @include flex(center, flex-start);
                     width: 100%;
                     transition: all 0.3s ease;
                 }
-    
+
                 i {
                     min-width: $nav-close-width;
                     height: 50px;
-    
+
                     line-height: 50px;
                     text-align: center;
                     font-size: 1.5rem;
-    
+
                     cursor: pointer;
                     transition: all 0.3s ease;
-    
+
                     &.arrow {
                         transform: rotate(0);
+
                         &.active {
                             transform: rotate(180deg);
                         }
                     }
                 }
-    
+
                 &__name {
                     font-size: 1.2rem;
                     font-weight: 600;
@@ -111,7 +120,7 @@
                 background-color: #222;
                 display: none;
                 transition: all 0.5s ease;
-                
+
                 li {
 
                     &.sub-menu__header {
@@ -120,7 +129,7 @@
                         background-color: $black;
                         display: none;
                     }
-                    
+
                     a {
                         position: relative;
                         padding: 0.5rem 1.5rem;
@@ -161,7 +170,7 @@
             }
         }
     }
-        
+
     &.close {
         width: $nav-close-width;
         opacity: 0.9;
@@ -177,7 +186,7 @@
                 width: 0;
                 opacity: 0;
             }
-    
+
             img.logo-close {
                 position: fixed;
                 top: 10px;
@@ -200,15 +209,17 @@
                     &__name {
                         display: none;
                     }
+
                     i.arrow {
                         display: none;
                     }
                 }
+
                 & .sub-menu {
                     position: absolute;
                     left: 100%;
                     top: -10px;
-                    
+
                     display: block;
                     border-radius: 0 10px 10px 0;
                     overflow: hidden;
@@ -236,7 +247,7 @@
             }
         }
 
-        & ~ .header {
+        &~.header {
             left: $nav-close-width;
             width: calc(100% - $nav-close-width);
 
@@ -254,13 +265,14 @@
         }
     }
 
-    & ~ .header {
+    &~.header {
         left: $nav-width;
         width: calc(100% - $nav-width);
     }
 }
+
 .header {
-    @include flex(center,space-between);
+    @include flex(center, space-between);
 
     position: fixed;
     top: 0;
@@ -269,13 +281,8 @@
     height: $header-height;
     width: calc(100% - $nav-close-width);
 
-    opacity: 0.8;
     z-index: 99;
     transition: all 0.4s ease;
-
-    &:hover {
-        opacity: 1;
-    }
 
     &.shrink {
         height: $header-shrink-height;
@@ -288,7 +295,7 @@
     }
 
     &__logo {
-        @include flex(center,space-between);
+        @include flex(center, space-between);
         margin-right: 1rem;
 
         i {
@@ -301,7 +308,7 @@
                 transform: rotateY(180deg);
                 transition: all 0.5s ease;
 
-                & ~ img {
+                &~img {
                     @include mobile {
                         opacity: 0;
                         transition: all 0.4 ease;
@@ -320,25 +327,81 @@
         }
     }
 
+    &__search__wrap {
+        flex: 1;
+        @include flex(center, flex-end);
+    }
+
     &__search {
-        font-family: $font-family;
-        width: 80%;
-        padding: 0.5rem 1.5rem;
-        font-size: 1rem;
-
-        border: 0;
-        border-radius: $border-radius;
-        outline: none;
-
+        position: relative;
+        top: 3px;
+        @include flex(center, center);
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(#dbdae1, #a3aaba);
+        border-radius: 50%;
         transform-origin: right 50%;
-        transform: scale(0);
-        opacity: 0;
-        transition: transform .3s ease, opacity .4s ease;
+        transition: all .3s ease;
         will-change: opacity, transform;
 
-        &.active {
-            transform: scale(1);
-            opacity: 1;
+        @include mobile {
+            width: 30px;
+            height: 30px;
+        }
+
+        &:hover {
+            width: 100%;
+            height: auto;
+            background: transparent;
+
+            .header__search__input {
+                padding: 0.5rem 1.5rem;
+                color: #555;
+                background: linear-gradient(#dbdae1, #a3aaba);
+
+                &::placeholder {
+                    color: #555;
+                }
+
+                &::selection {
+                    background-color: rgb(80, 138, 238);
+                    color: #fff;
+                }
+            }
+
+            .header__search__icon {
+                right: 4px;
+                color: #555;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        &__input {
+            font-family: $font-family;
+            font-size: 1rem;
+            color: transparent;
+            width: 100%;
+
+            background-color: transparent;
+
+            border: 0;
+            border-radius: $border-radius;
+            outline: none;
+
+            &::placeholder {
+                color: transparent;
+            }
+
+            &::selection {
+                color: transparent;
+            }
+        }
+
+        &__icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #444;
+            cursor: pointer;
         }
     }
 
@@ -346,7 +409,7 @@
 
         @include flex(center, space-between);
 
-        & > * {
+        &>* {
             font-size: 1.4rem;
             margin-left: 8px;
             cursor: pointer;
@@ -357,9 +420,10 @@
             }
 
             i {
-                padding: 8px;
+                padding: 9px;
                 border-radius: 50%;
-                @include overlay();
+                background: linear-gradient(#dbdae1, #a3aaba);
+                color: #444;
             }
 
             i:hover {
@@ -376,6 +440,6 @@
 
     @include mobile {
         width: 100%;
-        left:0;
+        left: 0;
     }
 }

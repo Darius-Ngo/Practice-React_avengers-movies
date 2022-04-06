@@ -1,7 +1,7 @@
-@use '../../scss/' as *;
+@use '../../scss/'as *;
 
 .banner {
-    @include flex(center,center);
+    @include flex(center, center);
     position: relative;
     height: 50vh;
 
@@ -44,7 +44,7 @@
 
     &__content {
         position: relative;
-        @include flex(flex-start,flex-start);
+        @include flex(flex-start, flex-start);
         margin-top: -200px;
 
         @include mobile {
@@ -58,7 +58,7 @@
             @include mobile {
                 display: none;
             }
-            
+
             a {
                 @include flex(center, center);
             }
@@ -67,6 +67,7 @@
                 width: 80%;
                 border-radius: $border-radius;
             }
+
             & .btn-play {
                 position: absolute;
                 top: 50%;
@@ -78,7 +79,8 @@
                 @include flex(center, center);
                 margin: 2rem 0;
 
-                .btns__trailer, .btns__addFV {
+                .btns__trailer,
+                .btns__addFV {
                     @include flex(center, flex-start);
                     padding: 8px 16px;
                     margin-right: 16px;
@@ -101,11 +103,33 @@
                     }
                 }
 
-                .btns__addFV {
+                .btns__addFV.active {
                     background-color: #97ce22;
 
                     &:hover {
                         box-shadow: 0 0 12px 4px #415e05;
+                    }
+
+                    & .icon_2 {
+                        display: none;
+                    }
+                }
+
+                .btns__addFV.done {
+                    opacity: 0.9;
+                    cursor: default;
+                    background-color: #97ce22;
+
+                    &:hover {
+                        box-shadow: unset;
+                    }
+
+                    & .icon_1 {
+                        display: none;
+                    }
+
+                    & .icon_2 {
+                        display: block;
                     }
                 }
             }
@@ -127,7 +151,8 @@
                     display: flex;
                 }
 
-                .btns__trailer, .btns__addFV {
+                .btns__trailer,
+                .btns__addFV {
                     @include flex(center, flex-start);
                     padding: 8px 12px;
                     border-radius: $border-radius;
@@ -197,7 +222,7 @@
                         text-align: center;
                         height: 200px;
                         width: 100px;
-                        
+
                         img {
                             object-fit: cover;
                             border-radius: 12px

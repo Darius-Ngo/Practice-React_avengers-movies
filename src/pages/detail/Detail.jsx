@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+
+import useListMovies from '../../components/hooks/useListMovies';
+import { actions } from '../../components/hooks/reducer';
 
 import tmdbApi from '../../api/tmdbApi';
 import apiConfig from '../../api/apiConfig';
@@ -17,7 +20,6 @@ const Detail = () => {
     const { category, id } = useParams();
 
     const [item, setItems] = useState([]);
-
     const [videos, setVideos] = useState([])
 
     useEffect(() => {
@@ -52,6 +54,40 @@ const Detail = () => {
         getVideos();
     }, [category, id]);
 
+    const [state, dispatch] = useListMovies();
+
+    const addFavories = (e) => {
+        if (category === 'movie') {
+            dispatch(actions.addMovieFavorites(item))
+        } else {
+            dispatch(actions.addTvFavorites(item))
+        }
+        e.target.classList.remove('active')
+        e.target.classList.add('done')
+    }
+
+    const addHistory = () => {
+        if (category === 'movie') {
+            dispatch(actions.addMovieHistory(item))
+        } else {
+            dispatch(actions.addTvHistory(item))
+        }
+    }
+
+    useEffect(() => {
+        const btnFV = document.querySelectorAll('.btns__addFV.active');
+        if (item) {
+            btnFV.forEach((item) => {
+                item.addEventListener('click', addFavories);
+            });
+        }
+        return () => {
+            btnFV.forEach((item) => {
+                item.addEventListener('click', addFavories);
+            })
+        }
+    }, [item])
+
     const setModalActive = () => {
         const modal = document.querySelector(`#modal__${item.id}`);
         if (videos.length > 0) {
@@ -70,7 +106,7 @@ const Detail = () => {
     return (
         <div className="padding-content" >
             <div className="banner" style={{ backgroundImage: `url(${backgroundImage})` }}>
-                <Link to={`/${category}/${id}/streaming`}>
+                <Link to={`/${category}/${id}/streaming`} onClick={addHistory}>
                     <ButtonOutline className="circle">
                         <i className='bx bx-play'></i>
                     </ButtonOutline>
@@ -79,19 +115,31 @@ const Detail = () => {
             <div className="detail mb-3">
                 <div className="detail__content">
                     <div className="detail__content__poster">
-                        <Link to={`/${category}/${id}/streaming`}>
+                        <Link to={`/${category}/${id}/streaming`} onClick={addHistory}>
                             <img src={poster} alt="poster" className="detail__content__poster__img" />
                             <Button className="circle btn-play"><i className='bx bx-play'></i></Button>
                         </Link>
                         <div className="btns">
                             <div className="btns__trailer" onClick={setModalActive}><i className='bx bxs-video'></i><span>Trailer</span></div>
-                            <div className="btns__addFV"><i className='bx bx-list-plus' ></i><span>Favorites</span></div>
+                            <div>
+                                <span className="btns__addFV active" onClick={(e) => { e.target.classList.remove('active'); e.target.classList.add('done') }}>
+                                    <i className='bx bx-list-plus icon_1' ></i>
+                                    <i className='bx bx-check icon_2'></i>
+                                    Favorites
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div className="detail__content__info">
                         <div className="btns">
                             <div className="btns__trailer" onClick={setModalActive}><i className='bx bxs-video'></i><span>Watch Trailer</span></div>
-                            <div className="btns__addFV"><i className='bx bx-list-plus' ></i><span>Add to favorites</span></div>
+                            <div >
+                                <span className="btns__addFV active" onClick={(e) => { e.target.classList.remove('active'); e.target.classList.add('done') }}>
+                                    <i className='bx bx-list-plus icon_1' ></i>
+                                    <i className='bx bx-check icon_2'></i>
+                                    Add to favorites
+                                </span>
+                            </div>
                         </div>
 
                         <h1 className="title">{item.title || item.name}</h1>
